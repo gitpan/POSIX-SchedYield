@@ -1,13 +1,17 @@
 POSIX-SchedYield
 
-This module exposes the POSIX system call sched_yield(2) to Perl programs. For further
-details please see the perldoc in lib/POSIX/SchedYield.pm.
+This module exposes the POSIX system call sched_yield(2) to Perl
+programs. For further details please see the perldoc in
+lib/POSIX/SchedYield.pm.
 
 INSTALLATION
 
-To install this module you require a working POSIX environment and a C compiler. So far
-it has only been tested on i686 Linux with GNU gcc 4.0.2, please email the author if
-you installed it (or ran into problems) in a different environment.
+To install this module you require a working POSIX environment and a
+C compiler. OpenBSD is not supported, since that OS seems to lack an
+implementation of sched_yield(). So far, the module has been tested
+successfully on i686 Linux, FreeBSD 6.0 and OS X, please email the
+author if you installed it (or ran into problems) in a different
+environment. 
 
 To install this module, run the following commands:
 
@@ -17,7 +21,8 @@ To install this module, run the following commands:
     make install
 
 
-Alternatively, to install with Module::Build, you can use the following commands:
+Alternatively, to install with Module::Build, you can use the following
+commands:
 
     perl Build.PL
     ./Build
@@ -27,7 +32,8 @@ Alternatively, to install with Module::Build, you can use the following commands
 
 SUPPORT AND DOCUMENTATION
 
-After installing, you can find documentation for this module with the perldoc command.
+After installing, you can find documentation for this module with the
+perldoc command.
 
     perldoc POSIX::SchedYield
 
@@ -50,6 +56,8 @@ COPYRIGHT AND LICENCE
 Copyright (C) 2005 Marc Beyer <japh@tirwhan.org>
 
 
-This program is free software; you can redistribute it and/or modify it under the GNU GPL.
+This program is free software; you can redistribute it and/or modify it
+under the GNU GPL.
 
-See the file COPYING in this distribution, or http://www.gnu.org/copyleft/gpl.html
+See the file COPYING in this distribution, or
+http://www.gnu.org/copyleft/gpl.html

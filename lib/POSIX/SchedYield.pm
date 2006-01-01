@@ -1,6 +1,6 @@
 package POSIX::SchedYield;
 
-use version; our $VERSION = qv('0.0.1');
+use version; our $VERSION = qv('0.0.2');
 
 use 5.006;
 use warnings;
@@ -21,11 +21,11 @@ __END__
 
 =head1 NAME
 
-POSIX::SchedYield - yield the processor
+POSIX::SchedYield - execute POSIX.1b system call sched_yield(2)
 
 =head1 VERSION
 
-This documentation refers to POSIX::SchedYield 0.0.1.
+This documentation refers to POSIX::SchedYield 0.0.2.
 
 =head1 SYNOPSIS
 
@@ -35,9 +35,9 @@ sched_yield();
 
 =head1 DESCRIPTION
 
-This module provides one function, C<sched_yield()>, which calls the POSIX.1b sched_yield(2) system call. It relinquishes the processor without blocking, allowing other processes to run. This does B<not> change the process priority (see the L<nice()|POSIX/nice> function from the L<POSIX|POSIX> module for that), so if your process is currently the one with the highest priority it will continue to run without interruption. See the sched_yield(2) man page and your operating systems scheduling documentation for more details.
+This module provides one function, C<sched_yield()>, which executes the POSIX.1b sched_yield system call. It relinquishes the processor without blocking, allowing other processes to run. This does B<not> change the process priority (see the L<nice|POSIX/nice> function from the L<POSIX|POSIX> module for that), so if your process is currently the one with the highest priority it will continue to run without interruption. See the sched_yield(2) man page and your operating systems scheduling documentation for more details.
 
-On most systems, use of the L<threads> module method C<yield> will also call the L<sched_yield(2)> system call, so you can use that instead, if you prefer. C<POSIX::SchedYield> is more explicit, will work with older and unthreaded versions of Perl, and will always call C<sched_yield>, whereas the C<threads> implementation may change at some point.
+On most systems, the L<threads> module method L<yield()|threads/yield> will also use the sched_yield system call, so you can use that instead, if you prefer. POSIX::SchedYield is more explicit, will work with older and unthreaded versions of Perl, and will always call sched_yield, whereas the C<threads> implementation may change at some point.
 
 =head1 INTERFACE
 
@@ -69,7 +69,7 @@ You can use C<POSIX::SchedYield> to implement a spinlock:
     flock($lock, LOCK_UN) or die "Can't release lock";
     close $lock or die "Can't close lockfile";
 
-This will yield the processor when a process is unable to obtain a lock, thus hopefully giving control back to the process which is handling the lock at the moment and allowing it to be released. You should B<not> use C<sched_yield> this way if you're expecting the lock to be held for any extended period of time (for example if the locking process waits for I/O with the lock held), because this will cause your yielding process to hog the CPU as it retries,yields,retries,yields etc.
+This will yield the processor when a process is unable to obtain a lock, thus hopefully giving control back to another process which is handling the lock at the moment and allowing it to be released. You should B<not> use sched_yield this way if you're expecting the lock to be held for any extended period of time (for example if the locking process waits for I/O with the lock held), because this will cause your yielding process to hog the CPU as it retries,yields,retries,yields etc.
 
 =head1 DEPENDENCIES
 
